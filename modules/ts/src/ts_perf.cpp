@@ -136,8 +136,6 @@ Regression& Regression::addMoments(TestBase* test, const std::string& name, cons
 {
     int len = (int)sizeof(cv::Moments) / sizeof(double);
     cv::Mat m(1, len, CV_64F, (void*)&array);
-    //ading 1 to moments to avoid accidental tests fail on laues close to 0
-    cv::add(m, 1, m);
 
     return Regression::add(test, name, m, eps, err);
 }
