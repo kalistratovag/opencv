@@ -30,7 +30,7 @@ int main( void )
     if( !eyes_cascade.load( eyes_cascade_name ) ){ printf("--(!)Error loading eyes cascade\n"); return -1; };
 
     //-- 2. Read the video stream
-    capture.open( -1 );
+    capture.open( "/home/akalist/work/build/opencv_debug/face.mp4");
     if ( ! capture.isOpened() ) { printf("--(!)Error opening video capture\n"); return -1; }
 
     while ( capture.read(frame) )

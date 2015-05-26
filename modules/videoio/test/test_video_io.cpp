@@ -42,6 +42,7 @@
 
 #include "test_precomp.hpp"
 #include "opencv2/videoio/videoio_c.h"
+#include <iostream>
 
 using namespace cv;
 using namespace std;
@@ -543,8 +544,82 @@ void CV_VideoIOTest::SpecificVideoTest(const string& dir, const cvtest::VideoFor
     }
 }
 
+/*class pf_inner_test: public ParallelLoopBody
+{
+public:
+    void operator() (const cv::Range& range) const
+    {
+        std::cout << "inner body" << std::endl;
+        for(int i = range.start; i < range.end; ++i)
+        {
+            m_result[i] = i*1.4;
+            for(int j = 0; j < 50000; ++j)
+            {
+                m_result[i]*=1.4;
+            }
+        }
+    }
+
+    mutable double m_result[800000];
+};
+
+class pf_test: public ParallelLoopBody
+{
+public:
+    void operator() (const cv::Range& range) const
+    {
+        pf_inner_test test;
+
+        std::cout << "inner run" << std::endl;
+        ThreadManager::instance().run(range, test, 0);
+
+        /*for(int i = range.start; i < range.end; ++i)
+        {
+            m_result[i] = i*1.4;
+            for(int j = 0; j < 50000; ++j)
+            {
+                m_result[i]*=1.4;
+            }
+        }*/
+//    }
+
+    //mutable double m_result[800000];
+//};
+
 void CV_ImageTest::run(int)
 {
+    //pf_test test;
+
+    //"/home/akalist/work/build/opencv_debug/face.avi"
+    /*std::cout << "parallel for" << std::endl;
+    ThreadManager::instance().run(cv::Range(0,800000), test, 100000);
+
+    int n = 800000;
+
+    ThreadManager::instance().setNumOfThreads(0);
+
+    ThreadManager::instance().run(cv::Range(0,800000), test, 100000); */   
+
+    //getTickCount();
+    /*std::cout << "non-parallel for" << std::endl;
+    for(size_t i = 0; i < n; ++i)
+    {
+        double k = i*1.4;
+        for(int j = 0; j < 50000; ++j)
+        {
+            k*=1.4;
+        }
+
+        if( test.m_result[i] != k )
+        {
+            std::cout << "ERRRORRR " << i << " " << test.m_result[i] << std::endl;
+        }
+    }
+
+    std::cout << "parallel for" << std::endl;
+    //ThreadManager::instance().run(cv::Range(0,800000), test, 200000);
+    std::cout << "finished" << std::endl;*/
+
     ImageTest(ts->get_data_path());
 }
 

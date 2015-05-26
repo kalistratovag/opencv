@@ -215,7 +215,7 @@ void BaseTest::safe_run( int start_from )
         int _code = setjmp( tsJmpMark );
         if( !_code )
             run( start_from );
-        else
+        else {}
             throw TS::FailureCode(_code);
         #else
             run( start_from );
@@ -236,7 +236,7 @@ void BaseTest::safe_run( int start_from )
         catch (const TS::FailureCode& fc)
         {
             std::string errorStr = TS::str_from_code(fc);
-            ts->printf(TS::LOG, "General failure:\n\t%s (%d)\n", errorStr.c_str(), fc);
+            //ts->printf(TS::LOG, "General failure:\n\t%s (%d)\n", errorStr.c_str(), fc);
 
             ts->set_failed_test_info( fc );
         }

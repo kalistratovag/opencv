@@ -120,6 +120,8 @@
 #  define CV_PARALLEL_FRAMEWORK "gcd"
 #elif defined HAVE_CONCURRENCY
 #  define CV_PARALLEL_FRAMEWORK "ms-concurrency"
+#elif defined HAVE_PTHREADS
+#  define CV_PARALLEL_FRAMEWORK "pthreads"
 #endif
 
 namespace cv
@@ -285,6 +287,11 @@ void cv::parallel_for_(const cv::Range& range, const cv::ParallelLoopBody& body,
             Concurrency::CurrentScheduler::Detach();
         }
 
+#elif defined HAVE_PTHREADS
+        //#error "rwgoiugeg"
+        void parallel_for_pthreads(const Range& range, const ParallelLoopBody& body, double nstripes);
+
+        parallel_for_pthreads(range, body, nstripes);
 #else
 
 #error You have hacked and compiling with unsupported parallel framework
